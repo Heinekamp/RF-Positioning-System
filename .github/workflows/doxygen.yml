@@ -8,6 +8,7 @@ on:
       - 'Code/**'                         # Trigger only if changes are made in the code/ directory
       - 'Documentation/doxygen/pages/**'  # Or if changes are made to the additional Doxygen pages
       - 'Documentation/Doxyfile'          # Or if the Doxyfile itself is changed
+  workflow_dispatch:                      # Allow manually re-running from the Actions tab
 
 permissions:
   contents: read

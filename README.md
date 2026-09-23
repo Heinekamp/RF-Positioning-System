@@ -23,19 +23,31 @@ A cost-effective 2-axis RF positioning system for characterizing antenna directi
 
 ## Measured Performance
 
-Repeatability of both rotation axes, measured with a motion-capture system:
+Repeatability of both rotation axes, measured with a motion-capture system across 10 repeated full revolutions:
 
-<p align="center">
-  <img src="Documentation/assets/results/azimuth-repeatability.png" alt="Azimuth repeatability" width="45%">
-  <img src="Documentation/assets/results/elevation-repeatability.png" alt="Elevation repeatability" width="45%">
-</p>
+<table>
+<tr>
+<td width="50%"><img src="Documentation/assets/results/azimuth-repeatability.png" alt="Azimuth repeatability"></td>
+<td width="50%"><img src="Documentation/assets/results/elevation-repeatability.png" alt="Elevation repeatability"></td>
+</tr>
+<tr>
+<td><sub>Azimuth positioning deviation from the commanded angle, measured after each of 10 repeated full revolutions.</sub></td>
+<td><sub>Elevation positioning deviation from the commanded angle, measured the same way.</sub></td>
+</tr>
+</table>
 
-Radiated emissions were measured to confirm the system doesn't interfere with the antenna under test. The antenna factor of the measurement antenna was calibrated against the chamber's noise floor, and the fully assembled, enclosed system was then measured against 20 dB under the CISPR 11 Class B radiated emissions limit:
+Radiated emissions of the fully assembled, enclosed system were measured with the Ethernet link forced to 10&nbsp;Mbit/s, against 20 dB under the CISPR 11 Class B radiated emissions limit:
 
-<p align="center">
-  <img src="Documentation/assets/results/antenna-factor-calibration.png" alt="Antenna factor calibration against the chamber noise floor" width="45%">
-  <img src="Documentation/assets/results/emi-compliance-enclosed.png" alt="Radiated emissions of the enclosed system, motors idle, all electronics on" width="45%">
-</p>
+<table>
+<tr>
+<td width="50%"><img src="Documentation/assets/results/emi-enclosure-eth10mbit-full-range.png" alt="Radiated emissions, 0.5-4.5 GHz, enclosed system, 10 Mbit Ethernet"></td>
+<td width="50%"><img src="Documentation/assets/results/emi-enclosure-eth10mbit-600M-1G-detail.png" alt="Radiated emissions, 0.6-1.0 GHz detail"></td>
+</tr>
+<tr>
+<td><sub>Radiated field strength from 0.5–4.5 GHz, vertical and horizontal antenna polarization, against the CISPR 11 Class B limit.</sub></td>
+<td><sub>Detail view of the 0.6–1.0 GHz band from the same measurement — individual emission peaks all remain more than 20 dB below the compliance limit shown at left.</sub></td>
+</tr>
+</table>
 
 ## Hardware
 
