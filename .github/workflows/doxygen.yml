@@ -1,0 +1,51 @@
+name: Generate Doxygen Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Code/**'                         # Trigger only if changes are made in the code/ directory
+      - 'Documentation/doxygen/pages/**'  # Or if changes are made to the additional Doxygen pages
+      - 'Documentation/Doxyfile'          # Or if the Doxyfile itself is changed
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+jobs:
+  doxygen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install latest Doxygen
+        run: |
+          wget https://github.com/doxygen/doxygen/releases/download/Release_1_14_0/doxygen-1.14.0.linux.bin.tar.gz
+          tar -xzf doxygen-1.14.0.linux.bin.tar.gz
+          sudo mv doxygen-1.14.0/bin/doxygen /usr/local/bin/doxygen
+
+      - name: Run Doxygen
+        working-directory: Documentation
+        run: doxygen Doxyfile
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Documentation/doxygen/html
+
+  deploy:
+    needs: doxygen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

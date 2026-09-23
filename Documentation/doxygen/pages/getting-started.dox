@@ -1,0 +1,8 @@
+/**
+* @file getting-started.dox
+* @brief Quick tutorial on how to get started with the RF Positioning System.
+*/
+
+/*! \page getting_started Getting Started with the RF Positioning System
+
+\section setup_sec Setting up the Device

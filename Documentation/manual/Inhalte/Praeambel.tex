@@ -1,0 +1,234 @@
+%% Input Codec
+\usepackage[utf8]{inputenc}
+
+%% Sprache (Silbentrennung etc.)
+\usepackage[british]{babel}
+
+%% Font Codec
+\usepackage[T1]{fontenc}
+
+\usepackage[useregional=numeric]{datetime2}
+
+\usepackage[lowtilde]{xurl}
+
+%% Literaturverzeichnis
+\usepackage[style=numeric-comp,sorting=none]{biblatex}
+%\usepackage[english=guillemets]{csquotes}
+\addbibresource{Literaturverzeichnis/Literaturverzeichnis.bib} 
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+
+%% Bearbeitung von Kopf und Fußzeile
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+\fancyheadoffset{0cm}
+\fancyfoot[R]{\thepage}
+
+%% Paket für die Verwendung von Einheiten
+\usepackage[separate-uncertainty=true]{siunitx}
+
+%% "Punktlinien" im Inhaltsverzeichnis
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%% Seitenabstaende
+\usepackage[left=2.5cm,right=2.5cm,top=1.25cm,bottom=1.25cm,includeheadfoot]{geometry} 
+
+%% Math Features
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+%% Grafik Features
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage[inkscapeformat=png]{svg}
+
+%% Zeilenabstand 1,5-fache Kegelhöhe
+\usepackage{setspace} \onehalfspacing
+
+%% Größerer Abstand zwischen Tabellenüberschrift und Tabelle
+\usepackage{caption}
+\captionsetup[table]{position=above,skip=0.5cm}
+
+%% Nicht einrücken
+\setlength{\parindent}{0em}
+
+%% Bearbeitung von Tabellen
+\usepackage{booktabs}
+\usepackage{ltablex} %was tabularx
+\keepXColumns   % used with ltablex and geometry
+
+\usepackage{wrapfig}
+\usepackage{float}
+
+%% Syntax Highlighting
+\usepackage{listings}
+
+%% Links und Verweise
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\lstdefinestyle{mystyle}{
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{white},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{red},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+%Subfigures
+\usepackage{subcaption}
+
+%urldate
+\DeclareFieldFormat{urldate}{%
+  (Accessed: \thefield{urlday}.%
+  {\thefield{urlmonth}}.%
+  \thefield{urlyear}\isdot)}
+
+\usepackage{mdframed}
+\usepackage{csquotes}
+
+\usepackage{pdfpages}
+
+\usepackage{array}
+\newcolumntype{L}{>{\centering\arraybackslash}m{4.5cm}}
+\newcolumntype{C}{>{\centering\arraybackslash}m{2.5cm}}
+
+\usepackage{multicol}
+
+\usepackage[most]{tcolorbox}
+\usepackage{fontawesome5} % for icons
+\usepackage{xcolor}
+
+% Generic github-style box template
+\tcbset{
+  githubbox/.style 2 args={
+    standard jigsaw,
+    opacityback=0,
+    opacityframe=0,
+    enhanced,
+    sharp corners,
+    boxrule=0pt,
+    colback=white,
+    colframe=white,
+    borderline west={2pt}{0pt}{#1},
+    before skip=10pt, after skip=10pt,
+    % Remove title bar, place title inside box
+  }
+}
+
+% Macro to render colored title line inside the box
+\newcommand{\githubboxtitle}[2]{%
+  {\color{#1}\bfseries #2}\\[2pt]
+}
+
+% Define individual boxes using the style, with title inside
+\newtcolorbox{notebox}{
+  githubbox={blue}{},
+  before upper={\githubboxtitle{blue}{\faInfoCircle\quad Note}}
+}
+
+\newtcolorbox{tipbox}{
+  githubbox={green!60!black}{},
+  before upper={\githubboxtitle{green!60!black}{\faLightbulb[regular]\quad Tip}}
+}
+
+\newtcolorbox{importantbox}{
+  githubbox={violet}{},
+  before upper={\githubboxtitle{violet}{\faExclamationCircle\quad Important}}
+}
+
+\newtcolorbox{warningbox}{
+  githubbox={orange!90!black}{},
+  before upper={\githubboxtitle{orange!90!black}{\faExclamationTriangle\quad Warning}}
+}
+
+\newtcolorbox{cautionbox}{
+  githubbox={red}{},
+  before upper={\githubboxtitle{red}{\faTimesCircle\quad Caution}}
+}
+
+
+\usepackage{enumitem}
+
+% Assembly instructions box
+% Define part colors
+\definecolor{part1}{RGB}{255, 85, 85}
+\definecolor{part2}{RGB}{85, 170, 255}
+\definecolor{part3}{RGB}{85, 255, 85}
+\definecolor{part4}{RGB}{255, 170, 0}
+
+% Tool pictogram mockups
+\newcommand{\flathead}[1]{%
+  \renewcommand{\arraystretch}{0.25}
+  \begin{tabular}{c}
+    \includegraphics[height=1.5em]{../assets/assembly/Flathead.png} \\
+    \tiny #1
+  \end{tabular}
+}
+\newcommand{\hexkey}[1]{%
+  \renewcommand{\arraystretch}{0.25}
+  \begin{tabular}{c}
+    \includegraphics[height=1.5em]{../assets/assembly/Hexkey.png} \\
+    \tiny #1
+  \end{tabular}
+}
+
+\newcommand{\torx}[1]{%
+  \renewcommand{\arraystretch}{0.25}
+  \begin{tabular}{c}
+    \includegraphics[height=1.5em]{../assets/assembly/Torx.png} \\
+    \tiny #1
+  \end{tabular}
+}
+
+\newcommand{\smartphone}[1]{%
+  \renewcommand{\arraystretch}{0.25}
+  \begin{tabular}{c}
+    \includegraphics[height=2.5em]{../assets/assembly/Phone.png} \\
+    \tiny #1
+  \end{tabular}
+}
+
+
+% Colored bullet item command
+\newcommand{\partitem}[2]{\item[\textcolor{#1}{\textbullet}] #2}
+
+% Assembly step macro
+\newcommand{\assemblystep}[4]{%
+  \noindent
+  \begin{tikzpicture}[remember picture]
+    % Outer box
+    \draw (0,0) rectangle (16,-10);
+
+    % Step number
+    \node[anchor=north west] at (0,-0.2) {\textbf{Step #1}};
+
+    % Tools section
+    \node[anchor=north west] at (10.3,0.1) {#3};
+    \draw (10,0) -- (10,-1) -- (16,-1);
+
+    % Image area
+    \draw (0,-1) -- (10,-1) -- (10,-10);
+    \node at (5,-5.5) {\includegraphics[width=9cm]{#2}};
+
+    % Parts and instructions node
+    \node[anchor=north west, text width=5.5cm, align=left] at (10.3,-1) {\small{#4}};
+  \end{tikzpicture}
+}

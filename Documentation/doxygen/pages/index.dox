@@ -1,0 +1,198 @@
+/**
+* @file index.dox
+* @brief Main page for the RF Positioning System documentation.
+*/
+
+/*! \mainpage RF Positioning System Documentation
+
+\section intro_sec Introduction
+
+The positioning system uses 2 stepper motors controlled by an ESP32 via SCPI over Ethernet to rotate the DUT in two axes.
+
+\image html TitleImage.png width=300px
+
+\section config_sec The config.h file
+The \ref config.h file is the central configuration file for the project. It contains various parameters that can be adjusted to customize the behaviour of the positioning system. Some of these parameters are also adjustable through the SCPI interface, allowing for dynamic changes during runtime. The following table lists the parameters defined in \ref config.h, along with a description, their default values, and whether they can be changed through the SCPI interface.
+
+<table>
+    <tr>
+        <th>Parameter</th>
+        <th>Description</th>
+        <th>Default Value</th>
+        <th>SCPI Configurable</th>
+    </tr>
+    <tr>
+        <td>DEVICE_MANUFACTURER</td>
+        <td>Manufacturer of the device</td>
+        <td>EMES</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>DEVICE_NAME</td>
+        <td>Name of the device</td>
+        <td>RF-Positioning-System</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>DEVICE_VERSION</td>
+        <td>Firmware version of the device</td>
+        <td>0.0.1</td>
+        <td>No</td>
+    </tr>
+    <tr style="border-bottom: 3px double #5F658D;">
+        <td>DEVICE_SERIAL</td>
+        <td>Serial number of the device</td>
+        <td>1</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>SCPI_PORT</td>
+        <td>Port number for SCPI server</td>
+        <td>5025</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>IP_ADDRESS</td>
+        <td>Default IP address of the device</td>
+        <td>192.168.0.50</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>MAC_ADDRESS</td>
+        <td>Default MAC address of the device</td>
+        <td>{ 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }</td>
+        <td>Yes</td>
+    </tr>
+    <tr style="border-bottom: 3px double #5F658D;">
+        <td>ERROR_QUEUE_SIZE</td>
+        <td>Size of the error queue</td>
+        <td>10</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>STEPS_PER_REV</td>
+        <td>Steps per revolution for stepper motors</td>
+        <td>200</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>MOTOR1_STEP_PIN</td>
+        <td>Pin to which the step pin of motor driver 1 is connected</td>
+        <td>27</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>MOTOR2_STEP_PIN</td>
+        <td>Pin to which the step pin of motor driver 2 is connected</td>
+        <td>13</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>MOTOR_SERIAL_PORT</td>
+        <td>Serial interface to which the stepper drivers are connected</td>
+        <td>Serial1</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>R_SENSE</td>
+        <td>Resistance value of the current sense resistor on the stepper driver module</td>
+        <td>0.11f</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>STEP_DELAY</td>
+        <td>Delay between step pulses being sent in ms</td>
+        <td>2</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>RMS_CURRENT</td>
+        <td>RMS current for stepper motors</td>
+        <td>1600 mA</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>HOLD_CURRENT</td>
+        <td>Hold current as a fraction /32 of RMS current</td>
+        <td>8</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>MICROSTEPS</td>
+        <td>Microstepping value</td>
+        <td>16</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>SPEED</td>
+        <td>Default speed in steps/s</td>
+        <td>1000</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>ACCELERATION</td>
+        <td>Default acceleration in steps/s²</td>
+        <td>5000</td>
+        <td>Yes</td>
+    </tr>
+</table>
+
+\attention \ref FLASH::initFlashMemory will copy these values into flash memory on first boot. Any changes to the config.h file will only be applied once the SYSTem:PRESet command is executed over the SCPI interface. Simply reflashing the device will not apply the changes, as the old values are still stored in flash memory.
+
+\note STEP_DELAY is not applied to movement commands that use speed and acceleration parameters. This means that it is currently only used for \ref STEPPER::step.
+
+\section connect_sec Connecting to the device
+
+The positioning system uses SCPI, a standardised command set for programmable instruments, over both Ethernet and USB interfaces. This allows for easy integration into automated test setups and compatibility with common laboratory software.
+
+\subsection connect_usb_sec Connecting over USB
+
+By default, the positioning system is set up to receive serial commands in the following format, enabling compatibility with tools such as the Arduino IDE's Serial Monitor:
+
+<ul>
+  <li>Baudrate: 9600</li>
+  <li>Data Bits: 8</li>
+  <li>Stop Bits: 1</li>
+  <li>Parity: None</li>
+  <li>Flow Control: None</li>
+  <li>Termination Character: <code>\n</code> (New line)</li>
+</ul>
+
+<div class="warning">
+<b>Note:</b> PUTTY uses a carriage return (<code>\r</code>) as the termination character. If you intend to use PUTTY to connect via USB, you must change the termination character in the configuration file and recompile the firmware.
+</div>
+
+<b>Using the Arduino IDE:</b>
+<ol>
+  <li>Install the Arduino IDE from <a href="https://www.arduino.cc/en/software/">https://www.arduino.cc/en/software/</a></li>
+  <li>Connect the positioning system to your computer using the USB port on the ESP32.</li>
+  <li>Select the board from the drop-down menu in the upper left.</li>
+  <li>Open the serial monitor from Tools &rarr; Serial Monitor.</li>
+  <li>Ensure the baud rate is set to 9600 (default).</li>
+  <li>Type <code>*IDN?</code> in the message field and send it using the enter key.</li>
+  <li>If the positioning system returns a string like <code>EMES, RF-Positioning-System, V0.0.1, #1</code>, a successful serial connection has been established.</li>
+</ol>
+
+\subsection connect_eth_sec Connecting over Ethernet
+
+Upon boot, the positioning system assigns itself a static IP address. The default is <b>192.168.0.50</b>.
+
+If a USB connection is established, the current IP address can be queried using the <code>SYSTem:COMMunicate:ETHernet:ADDRess?</code> command. The IP address can be changed with <code>SYSTem:COMMunicate:ETHernet:ADDRess &lt;ip address&gt;</code> (reboot required for changes to take effect).
+
+<b>Connecting with PuTTY:</b>
+<ol>
+  <li>Install PuTTY from <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html</a></li>
+  <li>Open PuTTY and select the "Raw" connection type.</li>
+  <li>Enter the device's IP address in the "Host Name (or IP address)" field.</li>
+  <li>Enter the port number (default: 5025) in the "Port" field.</li>
+  <li>Leave other settings at default and click "Open".</li>
+  <li>Type <code>*IDN?</code> in the terminal and press enter.</li>
+  <li>If the device returns a string like <code>EMES, RF-Positioning-System, V0.0.1, #1</code>, the connection is successful.</li>
+</ol>
+
+\section scpi_sec SCPI
+The \ref SCPI class implements the SCPI protocol for the RF Positioning System. It uses the <a href="https://github.com/Vrekrer/Vrekrer_scpi_parser">VREKRER SCPI Parser</a> library for parsing and handling SCPI commands. The functions which are called when SCPI commands are received are defined in the \ref scpi_commands.h file.
+
+\section STEPPER_sec Stepper Motors
+The \ref STEPPER class provides an interface for controlling the stepper motors used in the positioning system. It is based on the <a href="https://github.com/teemuatlut/TMCStepper">TMCStepper</a> library by teemuatlut, which handles the UART communication with the TMC2209 stepper drivers. 
+*/
